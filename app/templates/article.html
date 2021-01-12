@@ -1,0 +1,102 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-01-05 20:23:42
+ * @LastEditTime: 2021-01-12 06:22:58
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \2011cw2\app\templates\article.html
+-->
+{% extends "base.html" %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/article.css')}}">
+{% endblock %}
+{% block content %}
+<div class="article-basic">
+    <div class="page-header">
+        <h1>{{ article.title }}</h1>
+        {% if same %}
+        <span class="delete">
+            <form class="inline" method="post" action="/delete/{{article.id}}">
+                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?');">Delete
+                </button>
+            </form>
+        </span>
+        {% else %}
+        {% if collected %}
+        {% if value %}
+        <form action="/collected/{{article.id}}" method="post">
+            <button type="submit" class="btn btn-default btn-sm collbutton">
+                <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Collected
+            </button>
+        </form>
+        {% else %}
+        <button type="button" class="btn btn-default btn-sm collbutton">
+            <span class="glyphicon glyphicon-star unloginc" aria-hidden="true"></span> Collected
+        </button>
+        {% endif %}
+        {% else %}
+        {% if value %}
+        <form action="/collect/{{article.id}}" method="post">
+            <button type="submit" class="btn btn-default btn-sm collbutton">
+                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span> Collect
+            </button>
+        </form>
+        {% else %}
+        <button type="button" class="btn btn-default btn-sm collbutton">
+            <span class="glyphicon glyphicon-star-empty unloginc" aria-hidden="true"></span> Collect
+        </button>
+        {% endif %}
+        {% endif %}
+        {% endif %}
+        <small>
+            Author: <a href="/articleslist/{{article.author_id}}">{{ article.author_name}}</a><br>
+            Category: {{ cname }}<br>
+            Date: {{ article.time }}
+        </small>
+        <!-- article content -->
+        <div class="content">
+            <p class="text-left">{{ article.content }}</p>
+        </div>
+        <!-- comment -->
+        <h3 id="hcom">Comments</h3>
+        {% for msg in get_flashed_messages() %}
+        <div class="alert alert-info alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          {{ msg }}
+        </div>
+        {% endfor %}
+        {% for c in article.comments %}
+        <div class="panel panel-default" id="blockc">
+            <div class="panel-heading">
+                <h3 class="panel-title comment cment">{{c.writter}}:{{c.content}}<div class="pull-right">{{c.time}}</div></h3>
+            </div>
+            {% for r in c.replies%}
+            <div class="panel-body reply">
+                {{r.writter}} replied :{{r.content}}<div class="pull-right">{{r.time}}</div>
+            </div>
+            {% endfor %}
+        </div>
+        <div>
+            <form method="post" action="/reply/{{c.id}}">
+                <div class="input-group">
+                    <input name="rep" type="text" class="form-control" placeholder="Input your reply...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit">Reply</button>
+                    </span>
+                </div><!-- /input-group -->
+            </form>
+        </div>
+    </div>
+        {% endfor %}
+    <h3 id="hcom">Submit your comment</h3>
+    <div id="comment-form">
+        <form method="post" action="/comment/{{article.id}}">
+            <textarea value="comment" id="comtext" name="com">
+                </textarea>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</div>
+</div>
+{% endblock %}
+<!-- commentreply -->

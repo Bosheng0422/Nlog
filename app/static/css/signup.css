@@ -1,0 +1,44 @@
+
+.h1{
+    text-align: center;
+    margin-top: 10vh;
+    color: rgb(163, 0, 0);
+    font-weight: 600;
+    font-style: normal;
+    font-size: xx-large;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.inner{
+
+    text-align: left;
+    margin: 20px;
+}
+.innerword{
+    display: inline;
+    width: 30%;
+    text-align: end;
+}
+
+.signup{
+    border: none;
+    width: 350px;
+    position: absolute;
+    top: 20vh;
+    left: 0;
+    right: 10px;
+    bottom: 10px;
+    margin: auto;
+    text-align: center;
+}
+.f{
+    float: right;
+}
+
+#signupbutton{
+    margin-top: 10vh;
+}
+body{
+    background-color: rgb(255, 255, 255);
+    color: rgb(32, 8, 8);
+}

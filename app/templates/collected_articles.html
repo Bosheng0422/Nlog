@@ -1,0 +1,25 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-12-28 09:57:27
+ * @LastEditTime: 2021-01-12 00:13:33
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \2011cw2\app\templates\collected_articles.html
+-->
+<!--
+ * @Author: Yingning Chen
+ * @Description: Page to show all tasks
+-->
+
+<!-- inherent -->
+{% extends "base.html" %}
+{% block content %}
+{% for a in articles %}
+<div class="col-xs-12 col-md-6 col-lg-2 blockarticle">
+    <a href="/article/{{ a.id }}" class="thumbnail">
+      <img src="/static/img/upload/{{ a.image }}" alt="...">
+    </a>
+    Title:<a  href="/article/{{ a.id }}">{{a.title}}</a><p>Time:{{a.time}}</p>
+  </div>
+{% endfor %}
+{% endblock %}

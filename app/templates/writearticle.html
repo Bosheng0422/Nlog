@@ -1,0 +1,36 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-01-01 15:36:21
+ * @LastEditTime: 2021-01-12 00:40:14
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \2011cw2\app\templates\writearticle.html
+-->
+{% extends "base.html" %}
+{% block css%}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/writearticle.css')}}">
+{% endblock%}
+{% block content %}
+<div class="article">
+  <form action="" id="warticle" method="post" enctype="multipart/form-data">
+    <div id="asubmit">
+      Upload thumbnail:
+      {{ form.image(id ="image") }}</div>
+     
+    <div id="bsel">
+    Article category:
+    <select name="category" id="asel">
+      {% for c in categories %}
+      <option value="{{ c.id }}">{{c.category_name}}</option>
+      {% endfor %}
+    </select>  
+    {{ form.category (id="acat")}}
+    </div>
+    {{ form.head(id="ahead") }}
+    {{ form.content(id="acontent") }}
+    <!-- in case validator always false -->
+    {{ form.csrf_token }}
+    <input type="submit" value="Publish" id="apublish">
+  </form>
+</div>
+{% endblock %}

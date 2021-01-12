@@ -1,0 +1,40 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-12-28 09:57:27
+ * @LastEditTime: 2021-01-12 05:24:48
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \COMP2011\2011cw2\app\templates\viewallcomplete.html
+-->
+<!--
+ * @Author: Yingning Chen
+ * @Description: the page show all completed task
+-->
+
+<!-- inherent the base page style -->
+{% extends "base.html" %}
+{% block css %}
+<!-- self-design cover -->
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/home.css')}}">
+{% endblock %}
+{% block content %}
+<h1>Nlog Square: find your interest here!</h1>
+{% for msg in get_flashed_messages() %}
+<div class="alert alert-warning alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Warning!</strong> {{ msg }}
+</div>
+{% endfor %}
+<div class="container">
+  {% for a in articles %}
+  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+    <h3>Title:<a  href="/article/{{ a.id }}">{{a.title}}</a></h3>
+    <a href="/article/{{ a.id }}" class="thumbnail">
+      <img src="/static/img/upload/{{ a.image }}" alt="...">
+    </a>
+    <p>Author:<a href="/articleslist/{{ a.author_id }}">{{a.author_name}}</a></p>
+    <p>Time:{{a.time}}</p>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

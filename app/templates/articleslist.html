@@ -1,0 +1,66 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-12-28 09:57:27
+ * @LastEditTime: 2021-01-12 06:01:43
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \COMP2011\2011cw2\app\templates\home.html
+-->
+<!--
+ * @Author: Yingning Chen
+ * @Description: home page of this app --create a task
+-->
+<!-- inherent the base page style -->
+{% extends "base.html" %}
+{% block css %}
+<!-- some self-designed style to design the base one -->
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/articleslist.css')}}">
+{% endblock %}
+{% block content %}
+<div class="jumbotron tophead visible-lg">
+  <h1>{{ blog.blogname }}</h1>
+  <p>{{ blog.username }}'s blog</p>
+</div>
+<div class="container">
+  <!-- vertical nav -->
+  <div class="col-lg-2 col-md-2 col-sm-4 hidden-xs" id="catnav">
+    <ul class="list-group">
+      {% for c in categories %}
+      <button type="button" class="list-group-item">{{c.category_name }}<span
+          class="badge">{{categories.get(c)}}</span></button>
+      {% endfor %}
+      {% if same %}
+      <button type="button" class="list-group-item addcat">Add category</button>
+      <div class="addc">
+        <form method="post" action="/addcat">
+      <input type="text"id="addcinput" name="newcat">
+      <input type="submit" value="Add">
+      </form>
+    </div>
+      {% endif %}
+    
+    </ul>
+  </div>
+  <!-- the articles -->
+  <div class="container col-lg-10 col-md-10 col-sm-8">
+    {% for msg in get_flashed_messages() %}
+    <div class="alert alert-warning alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <strong>Warning!</strong> {{ msg }}
+    </div>
+    {% endfor %}
+    {% for a in articles %}
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+      <div class="image">
+        <h3>Title:<a href="/article/{{ a.id }}">{{a.title}}</a></h3>
+        <a href="/article/{{ a.id }}" class="thumbnail">
+          <img src="/static/img/upload/{{ a.image }}" alt="...">
+        </a>
+      <p>Author:<a href="/articleslist/{{ a.author_id }}">{{a.author_name}}</a></p>
+      <p>Time:{{a.time}}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% endblock %}

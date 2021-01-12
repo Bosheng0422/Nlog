@@ -1,0 +1,48 @@
+#ahead{
+    width: 70vw;
+    height: 48px;
+    margin: 20px 5vw 50px 5vw;
+    font-size: 25px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: solid;
+    resize: none;
+}
+#acontent{
+    margin-left: 5vw;
+    margin-bottom: 50px;
+    width: 70vw;
+    height: 40vh;
+    text-align: left;
+    resize: none;
+}
+.article{
+    border: solid;
+    margin:5vh 10vw 5vh 10vw;
+    width: 80vw;
+}
+#asubmit{
+    position: relative;
+    left: 5vw;
+    display: inline-block;
+    width: 40vw;
+}
+#apublish{
+    position: relative;
+    width: 100px;
+    top: 30px;
+}
+#acat{
+   display: none; 
+}
+#bsel{
+    position: relative;
+    left: 5vw;
+    display: inline-block;
+    margin-right: 20px;
+    width: 30vw;
+}
+#image{
+    display: inline-block;
+}

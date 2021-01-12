@@ -1,0 +1,38 @@
+.content{
+    margin-top: 20px;
+    margin-bottom: 50px;
+    text-align: left;
+    resize: none;
+}
+.comment{
+
+}
+.article-basic{
+    width: 80vw;
+    margin-left: 10vw;
+    margin-right: 10vw;
+}
+#hcom{
+    color: rgb(14, 14, 143);
+}
+.delete{
+    float: right;
+}
+#comtext{
+    resize: none;
+    width: 80vw;
+    height: 60px;
+    text-align: left;
+}
+.collbutton{
+    float: right;
+}
+#blockc{
+    margin-bottom: 0;
+}
+.cment{
+    font-size: medium;
+}
+.reply{
+    font-style: italic;
+}
