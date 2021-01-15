@@ -1,7 +1,7 @@
 '''
 Author: your name
 Date: 2020-12-28 09:57:27
-LastEditTime: 2021-01-12 06:44:47
+LastEditTime: 2021-01-15 11:47:30
 LastEditors: Please set LastEditors
 Description: In User Settings Editgn
 FilePath: \2011cw2\app\views.py
@@ -74,13 +74,18 @@ def signup():
         if User.query.filter(User.username == form.username.data).count() != 0 :
             flash("This username has been registered , please change")
             app.logger.info("signup:username: %s registered",form.username.data)
-            redirect("/signup")
-        u = User(username = form.username.data, password = form.password.data, blogname=form.blogname.data)
-        db.session.add(u)
-        db.session.commit()
-        app.logger.info("signup:username: %s register successfully",form.username.data)
-        return redirect("/")
-    return render_template("signup.html", form=form)
+        else:
+            if form.password.data == form.re_password.data:
+                u = User(username = form.username.data, password = form.password.data, blogname=form.blogname.data)
+                db.session.add(u)
+                db.session.commit()
+                app.logger.info("signup:username: %s register successfully",form.username.data)
+                return redirect("/")
+            else:
+                flash('two passwords do not match')
+                
+        
+    return render_template("signup.html", form=form,coll=True)
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
@@ -123,6 +128,7 @@ def passwordedit():
 #blog homepage
 @app.route('/', methods=['GET', 'POST'])
 def home():
+    articles = Article.query.filter().all()
     value = False
     if 'username' not in session:
         v = False
@@ -132,7 +138,6 @@ def home():
         v = True
         blog=User.query.filter(User.username==session['username']).first()
         blogid=blog.id
-    articles = Article.query.filter().all()
     return render_template("home.html",valuehome=v,blogid=blogid,articles=articles,same=False,coll=True)
 
 
@@ -140,6 +145,7 @@ def home():
 @app.route('/articleslist/<int:user_id>', methods=['GET', 'POST'])
 def articleslist(user_id):
     same = False
+    a = User.query.filter().first()
     if 'username' not in session:
         v = 0
     else:
@@ -209,6 +215,7 @@ def writearticle():
 @app.route('/collection/<int:user_id>', methods=['GET', 'POST'])
 def collection(user_id):
     same=False
+    user = User.query.filter().first()
     if 'username' not in session:
         v = 0
     else:
@@ -217,7 +224,7 @@ def collection(user_id):
         loginuser = User.query.filter(User.username==session['username']).first()
         if user.id == loginuser.id:
             same=True
-    return render_template("collected_articles.html",value=v,articles=user.articles,same=same)
+    return render_template("collected_articles.html",value=v,articles=user.articles,same=same,blogid=user.id)
     
     
 
@@ -279,15 +286,16 @@ def collect(article_id):
     if 'username' not in session:
         v = 0
         app.logger.info("collect:have not login")
+        coll=False
         return redirect_back()
     else:
         v = 1
-    sn = User.query.filter(User.username == session['username']).first()
-    article = Article.query.filter(Article.id == article_id).first()
-    if request.method == 'POST':
-        sn.articles.append(article)
-        db.session.commit()
-    return redirect_back()
+        sn = User.query.filter(User.username == session['username']).first()
+        article = Article.query.filter(Article.id == article_id).first()
+        if request.method == 'POST':
+            sn.articles.append(article)
+            db.session.commit()
+            return redirect_back()
     
 @app.route('/delete/<int:article_id>', methods=['GET', 'POST'])
 def delete(article_id):
@@ -310,7 +318,7 @@ def comment(article_id):
     else:
         if request.method == 'POST':
             comment=request.form.get("com")
-            c=Comment(content=comment,article_id=article_id,writter=session['username'])
+            c=Comment(content=comment,article_id=article_id,writer=session['username'])
             db.session.add(c)
             db.session.commit()
     return redirect_back()
@@ -325,7 +333,7 @@ def reply(comment_id):
     else:
         if request.method == 'POST':
             comment=request.form.get("rep")
-            c=CommentReply(content=comment,comment_id=comment_id,writter=session['username'])
+            c=CommentReply(content=comment,comment_id=comment_id,writer=session['username'])
             db.session.add(c)
             db.session.commit()
     return redirect_back()

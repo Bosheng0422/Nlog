@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-12-28 09:57:27
- * @LastEditTime: 2021-01-11 02:25:35
+ * @LastEditTime: 2021-01-14 15:40:21
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \COMP2011\2011cw2\app\templates\viewalluncomplete.html
@@ -13,24 +13,48 @@
 {% extends "base.html"%}
 <!DOCTYPE html>
 <html>
-   {% block css %}
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/signup.css')}}">
-    {% endblock %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/signup.css')}}">
+{% endblock %}
 
-        {% block content %}
-        <div class="h1">Sign up</div>
-        <div class="signup col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-xs-8 col-xs-offset-2">
-            <form action="" method="post" name="signup">
-                <fieldset>
-                    <div id="username" class="inner"><div class="innerword">Username:&nbsp;</div>{{form.username(class="f")}}</div>
-                    <div id="password" class="inner"><div class="innerword">Password:&nbsp;&nbsp;</div>{{form.password(class="f")}}</div>
-                    <div id="password" class="inner"><div class="innerword">Confirm:&nbsp;&nbsp;&nbsp;</div>{{form.re_password(class="f")}}</div>
-                    <div id="blogname" class="inner"><div class="innerword">Blogname:&nbsp;</div>{{form.blogname(class="f")}}</div>
-                    <div id="signupbutton"><input type="submit" value="Sign up"></div>
-                    <div class="loginbutton"><p>Have account already?</p><button type="button">Log in</button>
-                </fieldset>
-            </form>
-        </div>
-        {% endblock %}
+{% block content %}
 
-
+{% for msg in get_flashed_messages() %}
+<div class="alert alert-warning alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+    {{ msg }}
+</div>
+{% endfor %}
+<div class="h1">Sign up</div>
+<div class="signup col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-xs-8 col-xs-offset-2">
+    <form action="" method="post" name="signup">
+        <fieldset>
+            <div id="username" class="inner">
+                <div class="innerword">Username:&nbsp;</div>{{form.username(class="f")}}
+            </div>
+            <div class="error">
+                {{ form.username.errors.0 }}
+            </div>
+            <div id="password" class="inner">
+                <div class="innerword">Password:&nbsp;&nbsp;</div>{{form.password(class="f")}}
+            </div>
+            <div class="error">
+                {{ form.password.errors.0 }}
+            </div>
+            <div id="password" class="inner">
+                <div class="innerword">Confirm:&nbsp;&nbsp;&nbsp;</div>{{form.re_password(class="f")}}
+            </div>
+            <div class="error">
+                {{ form.re_password.errors.0 }}
+            </div>
+            <div id="blogname" class="inner">
+                <div class="innerword">Blogname:&nbsp;</div>{{form.blogname(class="f")}}
+            </div>
+            <div id="signupbutton"><input type="submit" value="Sign up"></div>
+            <div class="loginbutton">
+                <p>Have account already?</p><button type="button">Log in</button>
+        </fieldset>
+    </form>
+</div>
+{% endblock %}

@@ -1,7 +1,7 @@
 '''
 Author: your name
 Date: 2020-12-28 09:57:27
-LastEditTime: 2021-01-10 21:18:49
+LastEditTime: 2021-01-14 15:42:15
 LastEditors: Please set LastEditors
 Description: In User Settings Edit
 FilePath: \2011cw2\app\forms.py
@@ -28,9 +28,9 @@ class ReplyForm(FlaskForm):
     content = TextAreaField('content', render_kw={'placeholder': "Input your reply"} , validators=[DataRequired()])
 
 class UserForm(FlaskForm):
-    username = StringField('username', render_kw={'placeholder': "Username"} , validators=[DataRequired()])
-    password = PasswordField('password', render_kw={'placeholder': "Password"} , validators=[DataRequired()])
-    blogname = StringField('blogname', render_kw={'placeholder': "Blogname"} , validators=[DataRequired()])
+    username = StringField('username', render_kw={'placeholder': "Username"} , validators=[DataRequired(message='username cannot be empty')])
+    password = PasswordField('password', render_kw={'placeholder': "Password"} , validators=[DataRequired('password cannot be empty')])
+    blogname = StringField('blogname', render_kw={'placeholder': "Blogname"} , validators=[DataRequired('blogname cannot be empty')])
     re_password = PasswordField('re_password',  render_kw={'placeholder': 'Confirm Password'},
                                             validators=[
                                                     DataRequired(message='confirm password cannot be empty'),
