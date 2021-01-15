@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-01-05 20:23:42
- * @LastEditTime: 2021-01-15 11:52:48
+ * @LastEditTime: 2021-01-15 16:03:03
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \2011cw2\app\templates\article.html
@@ -24,20 +24,20 @@
         </span>
         {% else %}
         {% if collected %}
-        
+
         <form action="/collected/{{article.id}}" method="post">
             <button type="submit" class="btn btn-default btn-sm collbutton">
                 <span class="glyphicon glyphicon-star unloginc" aria-hidden="true"></span> Collected
             </button>
         </form>
         {% else %}
-       <form action="/collect/{{article.id}}" method="post">
+        <form action="/collect/{{article.id}}" method="post">
             <button type="submit" class="btn btn-default btn-sm collbutton">
                 <span class="glyphicon glyphicon-star-empty unloginc" aria-hidden="true"></span> Collect
             </button>
         </form>
         {% endif %}
-    
+
         {% endif %}
         {% endif %}
         <small>
@@ -53,14 +53,16 @@
         <h3 id="hcom">Comments</h3>
         {% for msg in get_flashed_messages() %}
         <div class="alert alert-info alert-dismissible" role="alert">
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          {{ msg }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            {{ msg }}
         </div>
         {% endfor %}
         {% for c in article.comments %}
         <div class="panel panel-default" id="blockc">
             <div class="panel-heading">
-                <h3 class="panel-title comment cment">{{c.writer}}:{{c.content}}<div class="pull-right">{{c.time}}</div></h3>
+                <h3 class="panel-title comment cment">{{c.writer}}:{{c.content}}<div class="pull-right">{{c.time}}</div>
+                </h3>
             </div>
             {% for r in c.replies%}
             <div class="panel-body reply">
@@ -78,17 +80,18 @@
                 </div><!-- /input-group -->
             </form>
         </div>
-    </div>
         {% endfor %}
-    <h3 id="hcom">Submit your comment</h3>
-    <div id="comment-form">
-        <form method="post" action="/comment/{{article.id}}">
-            <textarea value="comment" id="comtext" name="com">
+        <h3>Submit your comment</h3>
+        <div id="comment-form">
+            <form method="post" action="/comment/{{article.id}}">
+                <textarea value="comment" id="comtext" name="com">
                 </textarea>
-            <input type="submit" value="Submit">
-        </form>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
     </div>
+
 </div>
-</div>
+
 {% endblock %}
 <!-- commentreply -->
