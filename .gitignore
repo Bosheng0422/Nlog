@@ -5,4 +5,5 @@
 /app.db
 /app/static/img/upload
 /app/__pycache__
-/*.log
+/debug.log
+/errors.log
