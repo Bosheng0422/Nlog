@@ -1,7 +1,7 @@
 '''
 Author: your name
 Date: 2020-12-28 09:57:27
-LastEditTime: 2021-01-15 11:47:30
+LastEditTime: 2021-01-17 20:06:38
 LastEditors: Please set LastEditors
 Description: In User Settings Editgn
 FilePath: \2011cw2\app\views.py
@@ -12,9 +12,10 @@ from .forms import UserForm,ArticleForm
 from .models import User,Article,Category,collect_article,Comment,CommentReply
 from werkzeug.utils import secure_filename
 from flask_admin.contrib.sqla import ModelView
+from datetime import datetime
 import logging
 import os
-import uuid
+import uuid 
 
 
 admin.add_view(ModelView(User, db.session))
@@ -203,7 +204,7 @@ def writearticle():
             i.save(upload_path)
             upload_path = 'static/img/upload/' + filename
             a = Article(author_id=user.id,title=form.head.data,content = form.content.data,
-            image=filename,author_name=un,category_id=form.category.data)
+            image=filename,author_name=un,category_id=form.category.data,time=datetime.strptime(datetime.now().strftime('%Y-%m-%d %H:%M:%S'),"%Y-%m-%d %H:%M:%S"))
             db.session.add(a)
             db.session.commit()
             return redirect_back()
@@ -303,10 +304,10 @@ def delete(article_id):
     blogn = User.query.filter(User.username == session['username']).first()
     if request.method == 'POST':
         ad=Article.query.filter().first()
-        ad=Article.query.filter(ad.id==article_id).first()
+        ad=Article.query.filter(Article.id==article_id).first()
         db.session.delete(ad)
         db.session.commit()
-        return redirect("/articleslist/"+blogn.id)
+        return redirect("/articleslist/"+str(blogn.id))
 
 @app.route('/comment/<int:article_id>', methods=['GET', 'POST'])
 def comment(article_id):
@@ -318,7 +319,7 @@ def comment(article_id):
     else:
         if request.method == 'POST':
             comment=request.form.get("com")
-            c=Comment(content=comment,article_id=article_id,writer=session['username'])
+            c=Comment(content=comment,article_id=article_id,writer=session['username'],time=datetime.strptime(datetime.now().strftime('%Y-%m-%d %H:%M:%S'),"%Y-%m-%d %H:%M:%S"))
             db.session.add(c)
             db.session.commit()
     return redirect_back()
@@ -333,7 +334,7 @@ def reply(comment_id):
     else:
         if request.method == 'POST':
             comment=request.form.get("rep")
-            c=CommentReply(content=comment,comment_id=comment_id,writer=session['username'])
+            c=CommentReply(content=comment,comment_id=comment_id,writer=session['username'],time=datetime.strptime(datetime.now().strftime('%Y-%m-%d %H:%M:%S'),"%Y-%m-%d %H:%M:%S"))
             db.session.add(c)
             db.session.commit()
     return redirect_back()

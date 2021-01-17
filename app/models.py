@@ -1,7 +1,7 @@
 '''
 Author: your name
 Date: 2020-12-28 09:57:27
-LastEditTime: 2021-01-14 16:58:17
+LastEditTime: 2021-01-17 19:44:27
 LastEditors: Please set LastEditors
 Description: In User Settings Edit
 FilePath: \COMP2011\2011cw2\app\models.py
@@ -19,7 +19,7 @@ collect_article =db.Table('collect_article',db.Model.metadata,
 # database model
 class Article(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    time = db.Column(db.DateTime,default=datetime.strptime(datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S'),"%Y-%m-%d %H:%M:%S"))
+    time = db.Column(db.DateTime,default=datetime.utcnow())
     author_name = db.Column(db.String(100))
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
@@ -33,7 +33,7 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     writer = db.Column(db.String(30))
     content = db.Column(db.String(150))
-    time = db.Column(db.DateTime,default=datetime.strptime(datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S'),"%Y-%m-%d %H:%M:%S"))
+    time = db.Column(db.DateTime,default=datetime.utcnow())
     article_id = db.Column(db.Integer, db.ForeignKey('article.id'))
     replies = db.relationship('CommentReply', backref='comment', lazy='dynamic')
 
@@ -42,7 +42,7 @@ class CommentReply(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     writer = db.Column(db.String(30))
     content = db.Column(db.String(150))
-    time = db.Column(db.DateTime,default=datetime.strptime(datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S'),"%Y-%m-%d %H:%M:%S"))
+    time = db.Column(db.DateTime,default=datetime.utcnow())
     comment_id = db.Column(db.Integer, db.ForeignKey('comment.id'))
 
 
